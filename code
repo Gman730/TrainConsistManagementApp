@@ -1,0 +1,110 @@
+import java.util.HashSet;
+
+class Coach {
+    String coachId;
+    String type; // Sleeper, AC, General
+
+    Coach prev;
+    Coach next;
+
+    public Coach(String coachId, String type) {
+        this.coachId = coachId;
+        this.type = type;
+    }
+}
+
+class TrainConsist {
+    private Coach head;
+    private Coach tail;
+
+    // To prevent duplicate coach IDs
+    private HashSet<String> coachIds = new HashSet<>();
+
+    // Add coach at end
+    public void addCoach(String id, String type) {
+        if (coachIds.contains(id)) {
+            System.out.println("Duplicate coach ID not allowed!");
+            return;
+        }
+
+        Coach newCoach = new Coach(id, type);
+
+        if (head == null) {
+            head = tail = newCoach;
+        } else {
+            tail.next = newCoach;
+            newCoach.prev = tail;
+            tail = newCoach;
+        }
+
+        coachIds.add(id);
+    }
+
+    // Remove coach by ID
+    public void removeCoach(String id) {
+        Coach current = head;
+
+        while (current != null) {
+            if (current.coachId.equals(id)) {
+
+                if (current == head) head = current.next;
+                if (current == tail) tail = current.prev;
+
+                if (current.prev != null)
+                    current.prev.next = current.next;
+
+                if (current.next != null)
+                    current.next.prev = current.prev;
+
+                coachIds.remove(id);
+                System.out.println("Coach removed: " + id);
+                return;
+            }
+            current = current.next;
+        }
+
+        System.out.println("Coach not found!");
+    }
+
+    // Display train
+    public void displayForward() {
+        Coach temp = head;
+        while (temp != null) {
+            System.out.print(temp.coachId + "(" + temp.type + ") -> ");
+            temp = temp.next;
+        }
+        System.out.println("NULL");
+    }
+
+    // Reverse consist (important use case)
+    public void reverseConsist() {
+        Coach current = head;
+        Coach temp = null;
+
+        while (current != null) {
+            temp = current.prev;
+            current.prev = current.next;
+            current.next = temp;
+            current = current.prev;
+        }
+
+        if (temp != null) {
+            head = temp.prev;
+        }
+    }
+
+    // Validate consist (basic rule example)
+    public void validate() {
+        Coach temp = head;
+
+        while (temp != null && temp.next != null) {
+            if (temp.type.equals("Engine") && temp.next.type.equals("Engine")) {
+                System.out.println("Invalid: Two engines adjacent!");
+                return;
+            }
+            temp = temp.next;
+        }
+
+        System.out.println("Consist is valid.");
+    }
+}
