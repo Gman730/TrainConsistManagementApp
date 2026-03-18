@@ -1,12 +1,12 @@
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 class Train {
     private ArrayList<Bogie> bogies = new ArrayList<>();
     private LinkedHashSet<String> bogieIds = new LinkedHashSet<>();
+    private HashMap<String, Integer> capacityMap = new HashMap<>();
 
-    // Add bogie
-    public void addBogie(Bogie bogie) {
+    // Add bogie with capacity mapping
+    public void addBogie(Bogie bogie, int capacity) {
 
         if (bogieIds.contains(bogie.id)) {
             System.out.println(" Duplicate ID not allowed: " + bogie.id);
@@ -15,23 +15,34 @@ class Train {
 
         bogies.add(bogie);
         bogieIds.add(bogie.id);
+        capacityMap.put(bogie.id, capacity);
 
         System.out.println(" Bogie added: " + bogie.id);
     }
 
-    // Display insertion order IDs
-    public void displayInsertionOrder() {
-        System.out.println("\n--- Bogie IDs (Insertion Order) ---");
-        for (String id : bogieIds) {
-            System.out.println(id);
+    // Get capacity of a bogie
+    public void getCapacity(String id) {
+        if (capacityMap.containsKey(id)) {
+            System.out.println("Capacity of " + id + " = " + capacityMap.get(id));
+        } else {
+            System.out.println(" Bogie not found!");
         }
     }
 
-    // Display full bogie details
-    public void displayBogies() {
-        System.out.println("\n--- Train Composition ---");
-        for (Bogie b : bogies) {
-            b.displayDetails();
+    // Total capacity calculation
+    public void totalCapacity() {
+        int total = 0;
+        for (int cap : capacityMap.values()) {
+            total += cap;
+        }
+        System.out.println(" Total Capacity: " + total);
+    }
+
+    // Display mapping
+    public void displayCapacityMap() {
+        System.out.println("\n--- Bogie Capacity Mapping ---");
+        for (String id : capacityMap.keySet()) {
+            System.out.println(id + " → " + capacityMap.get(id));
         }
     }
 }
