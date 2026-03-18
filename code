@@ -1,17 +1,45 @@
-public class Main {
-    public static void main(String[] args) {
+import java.util.ArrayList;
+import java.util.HashSet;
 
-        Train train = new Train();
+class Train {
+    private ArrayList<Bogie> bogies = new ArrayList<>();
+    private HashSet<String> bogieIds = new HashSet<>();
 
-        // Adding Passenger Bogies
-        train.addBogie(new PassengerBogie("P1", "Sleeper", 72));
-        train.addBogie(new PassengerBogie("P2", "AC Chair", 50));
+    // Add bogie with uniqueness check
+    public void addBogie(Bogie b) {
 
-        // Adding Goods Bogies
-        train.addBogie(new GoodsBogie("G1", "Rectangular", "Coal"));
-        train.addBogie(new GoodsBogie("G2", "Cylindrical", "Oil"));
+        if (bogieIds.contains(b.id)) {
+            System.out.println("❌ Duplicate Bogie ID not allowed: " + b.id);
+            return;
+        }
 
-        // Display Summary
-        train.displaySummary();
+        bogies.add(b);
+        bogieIds.add(b.id);
+
+        System.out.println("✅ Bogie added successfully: " + b.id);
+    }
+
+    // Remove bogie and update Set
+    public void removeBogie(String id) {
+
+        for (Bogie b : bogies) {
+            if (b.id.equals(id)) {
+                bogies.remove(b);
+                bogieIds.remove(id);
+                System.out.println("🗑️ Bogie removed: " + id);
+                return;
+            }
+        }
+
+        System.out.println("⚠️ Bogie not found: " + id);
+    }
+
+    // Display all bogies
+    public void displayBogies() {
+        System.out.println("\n--- Train Composition ---");
+
+        for (Bogie b : bogies) {
+            b.displayDetails();
+        }
     }
 }
