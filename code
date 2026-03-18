@@ -1,15 +1,15 @@
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.TreeSet;
 
 class Train {
     private ArrayList<Bogie> bogies = new ArrayList<>();
-    private HashSet<String> bogieIds = new HashSet<>();
+    private TreeSet<String> bogieIds = new TreeSet<>();
 
-    // Add bogie with uniqueness enforcement
+    // Add bogie with sorting + uniqueness
     public void addBogie(Bogie bogie) {
 
         if (bogieIds.contains(bogie.id)) {
-            System.out.println(" Duplicate Bogie ID not allowed: " + bogie.id);
+            System.out.println(" Duplicate ID not allowed: " + bogie.id);
             return;
         }
 
@@ -19,20 +19,15 @@ class Train {
         System.out.println(" Bogie added: " + bogie.id);
     }
 
-    // Remove bogie safely
-    public void removeBogie(String id) {
-        for (int i = 0; i < bogies.size(); i++) {
-            if (bogies.get(i).id.equals(id)) {
-                bogies.remove(i);
-                bogieIds.remove(id);
-                System.out.println(" Bogie removed: " + id);
-                return;
-            }
+    // Display sorted IDs
+    public void displaySortedIds() {
+        System.out.println("\n--- Sorted Bogie IDs ---");
+        for (String id : bogieIds) {
+            System.out.println(id);
         }
-        System.out.println(" Bogie not found: " + id);
     }
 
-    // Display consist
+    // Display actual train composition
     public void displayBogies() {
         System.out.println("\n--- Train Composition ---");
         for (Bogie b : bogies) {
