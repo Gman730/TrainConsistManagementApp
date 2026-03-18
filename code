@@ -9,14 +9,14 @@ class Train {
     public void addBogie(Bogie b) {
 
         if (bogieIds.contains(b.id)) {
-            System.out.println("❌ Duplicate Bogie ID not allowed: " + b.id);
+            System.out.println(" Duplicate Bogie ID not allowed: " + b.id);
             return;
         }
 
         bogies.add(b);
         bogieIds.add(b.id);
 
-        System.out.println("✅ Bogie added successfully: " + b.id);
+        System.out.println(" Bogie added successfully: " + b.id);
     }
 
     // Remove bogie and update Set
@@ -31,7 +31,7 @@ class Train {
             }
         }
 
-        System.out.println("⚠️ Bogie not found: " + id);
+        System.out.println(" Bogie not found: " + id);
     }
 
     // Display all bogies
