@@ -1,11 +1,11 @@
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 class Train {
     private ArrayList<Bogie> bogies = new ArrayList<>();
-    private TreeSet<String> bogieIds = new TreeSet<>();
+    private LinkedHashSet<String> bogieIds = new LinkedHashSet<>();
 
-    // Add bogie with sorting + uniqueness
+    // Add bogie
     public void addBogie(Bogie bogie) {
 
         if (bogieIds.contains(bogie.id)) {
@@ -19,15 +19,15 @@ class Train {
         System.out.println(" Bogie added: " + bogie.id);
     }
 
-    // Display sorted IDs
-    public void displaySortedIds() {
-        System.out.println("\n--- Sorted Bogie IDs ---");
+    // Display insertion order IDs
+    public void displayInsertionOrder() {
+        System.out.println("\n--- Bogie IDs (Insertion Order) ---");
         for (String id : bogieIds) {
             System.out.println(id);
         }
     }
 
-    // Display actual train composition
+    // Display full bogie details
     public void displayBogies() {
         System.out.println("\n--- Train Composition ---");
         for (Bogie b : bogies) {
